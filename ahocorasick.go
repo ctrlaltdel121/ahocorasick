@@ -257,8 +257,7 @@ func (m *Matcher) Match(in []byte) []int {
 	return hits
 }
 
-func (m *Matcher) MatchWithPositions(in []byte) ([]int, map[int][]int){
-	m.counter += 1
+func (m *Matcher) MatchWithPositions(in []byte) ([]int, map[int][]int) {
 	var hits []int
 
 	endPositions := map[int][]int{}
@@ -276,26 +275,15 @@ func (m *Matcher) MatchWithPositions(in []byte) ([]int, map[int][]int){
 			f := n.child[c]
 			n = f
 
-			if f.output && f.counter != m.counter {
+			if f.output {
 				hits = append(hits, f.index)
 				endPositions[f.index] = append(endPositions[f.index], i)
-				f.counter = m.counter
 			}
 
 			for !f.suffix.root {
 				f = f.suffix
-				if f.counter != m.counter {
-					hits = append(hits, f.index)
-					endPositions[f.index] = append(endPositions[f.index], i)
-					f.counter = m.counter
-				} else {
-
-					// There's no point working our way up the
-					// suffixes if it's been done before for this call
-					// to Match. The matches are already in hits.
-
-					break
-				}
+				hits = append(hits, f.index)
+				endPositions[f.index] = append(endPositions[f.index], i)
 			}
 		}
 	}
