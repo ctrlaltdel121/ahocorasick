@@ -215,7 +215,7 @@ func NewStringMatcher(dictionary []string) *Matcher {
 
 // Match searches in for blices and returns all the blices found as
 // indexes into the original dictionary
-func (m *Matcher) Match(in []byte) []int {
+func (m *Matcher) Match(in []rune) []int {
 	m.counter += 1
 	var hits []int
 
@@ -257,7 +257,7 @@ func (m *Matcher) Match(in []byte) []int {
 	return hits
 }
 
-func (m *Matcher) MatchWithPositions(in []byte) ([]int, map[int][]int) {
+func (m *Matcher) MatchWithPositions(in []rune) ([]int, map[int][]int) {
 	var hits []int
 
 	endPositions := map[int][]int{}
